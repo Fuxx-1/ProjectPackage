@@ -56,7 +56,7 @@ docker-compose --version
 
 ## ToDoList Release
 
-> Attention: This service ==only have backstage==. So you'd better to write a script to use it.
+> Attention: This service only have backstage. So you'd better to write a script to use it.
 
 ##### Download
 
