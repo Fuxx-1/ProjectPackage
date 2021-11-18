@@ -1,0 +1,30 @@
+version: '2'
+services: 
+    java:
+        image: ascdc/jdk8
+        container_name: web
+        ports:
+        # 外部端口:内部端口
+          - "8080:8080"
+        volumes:
+            - ./index.jar:/data/index.jar
+        # 这是java项目的环境变量，yml文件配置
+        entrypoint: java -jar /data/index.jar 
+        depends_on:
+            - redis
+        links:
+            - redis
+        networks:
+            - Todo
+    redis: 
+        image: redis
+        container_name: Todo_redis_1001
+        command: redis-server --appendonly yes
+        volumes:
+        # 数据目录，要确保先创建好
+            - ./data:/data
+        networks:
+            - Todo
+networks: 
+    Todo: 
+        driver: bridge
