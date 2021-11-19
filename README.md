@@ -6,7 +6,7 @@ This is the repository about my project package (normally packaged by docker).
 
 ## Docker Install
 
-From [链接](https://www.runoob.com/docker/ubuntu-docker-install.html)
+From [Link](https://www.runoob.com/docker/ubuntu-docker-install.html)
 
 ### Automatic installation using official installation script
 
@@ -50,18 +50,16 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
-
-
 # MyPackage
 
 ## ToDoList Release
 
-> Attention: This service only have backstage. So you'd better to write a script to use it.
+> We default that you have installed `git`, `docker `and `docker-compose`.
 
 ##### Download
 
 ```shell
-curl -O https://github.com/Fuxx-1/ProjectPackage/archive/refs/tags/ToDoList_v1.1.tar.gz && tar -zxvf ToDoList_v1.1.tar.gz && rm ToDoList_v1.1.tar.gz && cd ./ProjectPackage/ToDoList/ && ls -al
+sudo git clone https://github.com/Fuxx-1/ProjectPackage.git && sudo cp ./ProjectPackage/ToDoList ./ToDoList && rm -rf ./ProjectPackage && cd ./ToDoList
 ```
 
 Deploy
