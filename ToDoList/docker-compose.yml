@@ -1,13 +1,16 @@
-version: '2'
+version: '3'
+
+
 services: 
     java:
         image: ascdc/jdk8
-        container_name: web
+        restart: always
+        container_name: backEnd
         ports:
         # 外部端口:内部端口
           - "8080:8080"
         volumes:
-            - ./index.jar:/data/index.jar
+            - ./data/backEnd/index.jar:/data/index.jar
         # 这是java项目的环境变量，yml文件配置
         entrypoint: java -jar /data/index.jar 
         depends_on:
@@ -16,15 +19,26 @@ services:
             - redis
         networks:
             - Todo
+
     redis: 
         image: redis
+        restart: always
         container_name: Todo_redis_1001
         command: redis-server --appendonly yes
         volumes:
         # 数据目录，要确保先创建好
-            - ./data:/data
+            - ./data/database:/data
         networks:
             - Todo
+    frontEnd:
+        image: nginx
+        restart: always
+        volumes:
+            - ./data/conf/nginx.conf:/etc/nginx/nginx.conf
+            - ./data/frontEnd/dist:/usr/share/nginx/html
+        ports:
+                - "80:8000"
+
 networks: 
     Todo: 
         driver: bridge
