@@ -59,7 +59,7 @@ docker-compose --version
 ##### Download
 
 ```shell
-sudo git clone https://github.com/Fuxx-1/ProjectPackage.git && sudo cp ./ProjectPackage/ToDoList ./ToDoList && rm -rf ./ProjectPackage && cd ./ToDoList
+sudo git clone https://github.com/Fuxx-1/ProjectPackage.git && sudo cp -r ./ProjectPackage/ToDoList ./ToDoList && rm -rf ./ProjectPackage && cd ./ToDoList
 ```
 
 Deploy
