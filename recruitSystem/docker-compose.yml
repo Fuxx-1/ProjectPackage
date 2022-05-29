@@ -15,6 +15,7 @@ services:
         ports:
         # 外部端口:内部端口
           - "8080:8080"
+          - "465:465"
         volumes:
             - ./data/backEnd/index.jar:/data/index.jar
         # 这是java项目的环境变量，yml文件配置
