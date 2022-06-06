@@ -67,6 +67,25 @@ Deploy
 >  Attention: You can use `vim` to change file `docker-compose.yml` then you can get a custom port for your service.
 
 ```shell
-docker-compose up -d && docker ps -a
+docker-compose up -d && docker-compose ls
+```
+
+## UserTest Release
+
+
+> We default that you have installed `docker `and `docker-compose`.
+
+##### Download
+
+```shell
+curl -O https://github.com/Fuxx-1/ProjectPackage/releases/download/UserTest-v0.0.2/UserTest.zip  && unzip UserTest.zip && rm UserTest.zip && cd ./UserTest
+```
+
+Deploy
+
+>  Attention: You can use `vim` to change file `docker-compose.yml` then you can get a custom port for your service.
+
+```shell
+docker-compose up -d && docker-compose ls
 ```
 
