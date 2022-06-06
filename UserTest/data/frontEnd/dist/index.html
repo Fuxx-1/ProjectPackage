@@ -1,29 +1,175 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="./icon.jpeg">
-    <title>Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <style>
-        .center {
-            width: 100vw;
-            height: 100vh;
-            line-height: 100vh;
+        form {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            font-size: 50px;
-            color: blanchedalmond;
-            letter-spacing: 4px;
+            border: 1px solid grey;
+            padding: 20px;
         }
     </style>
+    <script>
+        function ajax(opt) {
+            let {
+                method,
+                url,
+                data,
+                headers,
+                parmas,
+                cookie,
+            } = opt;
+            //default action
+            if (!method) {
+                if (data) {
+                    method = "POST";
+                } else {
+                    method = 'GET';
+                }
+            }
+
+            if (!url) {
+                url = window.location.href;
+            }
+            return new Promise((res, rej) => {
+                let xml = new XMLHttpRequest();
+                xml.onreadystatechange = function () {
+                    if (this.readyState !== 4) {
+                        return;
+                    }
+                    let { responseText } = this;
+                    responseText = JSON.parse(responseText);
+                    if (this.status === 200) {
+                        //判断返回的数据是否是一个JSON串
+                        res(responseText);
+                    } else {
+                        rej(new Error(responseText));
+                    }
+                }
+                //查看是否设置路由参数
+                if (parmas && JSON.stringify(parmas).length > 2) {
+                    url += '?'
+                    for (let i in parmas) {
+                        url += `${i}=${parmas[i]}&`;
+                    }
+                    url = url.slice(0, -1);
+                }
+                xml.open(method, url);
+                //查看是否设置请求头
+                if (headers && JSON.stringify(headers).length > 2) {
+                    for (let i in headers) {
+                        xml.setRequestHeader(i, headers[i]);
+                    }
+                }
+                //是否携带cookie
+                if (cookie) {
+                    xml.withCredentials = true;
+                }
+                if (data) {
+                    xml.setRequestHeader('Content-Type', 'application/json')
+                    return xml.send(JSON.stringify(data));
+                }
+                return xml.send();
+            })
+        }
+    </script>
 </head>
 
-<body style="overflow:hidden;overflow-x:hidden;">
-    <div class="center">
-        这是一个网页样例，该项目无网页
-    </div>
+<body>
+    <form id="form">
+        <input type="text" name="user" placeholder="user"><br />
+        <input type="text" name="pass" placeholder="pass"><br />
+        <input type="text" name="newpass" placeholder="new pass"><br /><br />
+        <input type="radio" name="islogin" id="" value="login">登录
+        <input type="radio" checked name="islogin" id="" value="sign">注册
+        <input type="radio" name="islogin" id="" value="change">改密
+        <input type="radio" name="islogin" id="" value="cancel">注销<br /><br />
+        <button id="btn" class="disable">发送请求</button>
+    </form>
+    <script>
+        let form = document.getElementById('form');
+        let baseUrl = 'http://ali.newimg.ltd:8082/';
+        const alertMsg = res => {
+            alert(res.msg);
+        }
+        let login = (e) => {
+            document.getElementById('btn').disabled = true;
+            setTimeout(() => {
+                document.getElementById('btn').disabled = false;
+            }, 2000);
+            //阻止默认参数
+            e = e || window.event;
+            e.preventDefault();
+            let { user, pass, islogin, newpass } = form;
+            if (!islogin.value) {
+                return alert('请选择请求模式');
+            }
+            switch (islogin.value) {
+                case 'login':
+                    if (!user.value || !pass.value) {
+                        return alert('请输入完整帐号和密码');
+                    }
+                    ajax({
+                        url: baseUrl + 'user/login',
+                        data: {
+                            username: user.value,
+                            password: pass.value,
+                        },
+                    }).then(
+                        alertMsg
+                    ).catch();
+                    break;
+                case 'sign':
+                    if (!user.value || !pass.value) {
+                        return alert('请输入完整帐号和密码');
+                    }
+                    ajax({
+                        url: baseUrl + 'user/add',
+                        data: {
+                            username: user.value,
+                            password: pass.value,
+                        },
+                    }).then(alertMsg).catch();
+                    break;
+                case 'change':
+                    if (!user.value || !pass.value || !newpass.value) {
+                        return alert('请输入完整帐号和密码以及新密码');
+                    }
+                    ajax({
+                        url: baseUrl + 'user/update',
+                        data: {
+                            username: user.value,
+                            old_password: pass.value,
+                            new_password: newpass.value,
+                        },
+                    }).then(alertMsg).catch()
+                    break;
+                case 'cancel':
+                    if (!user.value || !pass.value) {
+                        return alert('请输入完整帐号和密码');
+                    }
+                    ajax({
+                        url: baseUrl + 'user/del',
+                        data: {
+                            username: user.value,
+                            password: pass.value,
+                        },
+                    }).then(alertMsg).catch()
+                    break;
+                default:
+                    break;
+            }
+        }
+        document.getElementById('btn').onclick = login
+    </script>
 </body>
 
 </html>

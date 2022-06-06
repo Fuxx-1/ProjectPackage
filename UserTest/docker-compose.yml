@@ -8,15 +8,12 @@ services:
         container_name: UserTest_backEnd
         # 这是java项目的环境变量，yml文件配置
         environment:
-            MYSQL_ADDRESS: "Server_MySQL:3306"
+            MYSQL_ADDRESS: "UserTest_MySQL:3306"
             MYSQL_USERNAME: "root"
-            MYSQL_PASSWORD: "e3h2qh4uhroefuhsgdbiol9u897"
-            REDIS_HOST: "Server_redis"
-            REDIS_PORT: "6379"
+            MYSQL_PASSWORD: "weiortuqy4r897oaghuvlserhjg"
         ports:
         # 外部端口:内部端口
           - "8080:8080"
-          - "465:465"
         volumes:
             - ./data/backEnd/index.jar:/data/index.jar
         entrypoint: java -jar /data/index.jar 
@@ -44,14 +41,13 @@ services:
             # 时区上海
             TZ: Asia/Shanghai
             # root 密码
-            MYSQL_ROOT_PASSWORD: "e3h2qh4uhroefuhsgdbiol9u897"
+            MYSQL_ROOT_PASSWORD: "weiortuqy4r897oaghuvlserhjg"
             # 初始化数据库(后续的初始化sql会在这个库执行)
-            MYSQL_DATABASE: PETHOSPITALINFMATION
+            MYSQL_DATABASE: UserTest
             # 初始化用户(不能是root 会报错, 后续需要给新用户赋予权限)
-            MYSQL_USER: pet
+            MYSQL_USER: KUGklhdsf
             # 用户密码
-            MYSQL_PASSWORD: 12345
-            # MYSQL_DATABASE: "seckill"
+            MYSQL_PASSWORD: aJYFasdfew342oeKJYHK856qy9itLYUIyt843765yKYFghs
         command:
             --default-authentication-plugin=mysql_native_password
             --character-set-server=utf8mb4
