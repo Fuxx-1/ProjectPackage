@@ -14,7 +14,7 @@ create table `user` (
   `password` varchar(40),
   -- 密码
   `name` varchar(40) default null,
-  `gender` tinyin default nullt,
+  `gender` tinyin default null,
   `major` varchar(30) default null,
   `email` varchar(40) default null,
   `phone` varchar(40) default null,
