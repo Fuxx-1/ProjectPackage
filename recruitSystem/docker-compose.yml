@@ -12,6 +12,8 @@ services:
             MYSQL_PASSWORD: "e3h2qh4uhroefuhsgdbiol9u897"
             REDIS_HOST: "recruitSystem_redis"
             REDIS_PORT: "6379"
+            WECHAT_APP_ID: "AppID"
+            WECHAT_APP_SECRET: "Secret"
         ports:
         # 外部端口:内部端口
           - "8080:8080"
